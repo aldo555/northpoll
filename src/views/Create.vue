@@ -38,7 +38,6 @@
             @keydown="nextOption(index)"
             v-model="options[index]"
             :disabled="lastPollCreated"
-            id="question"
             :class="{ 'bg-gray-100' : index % 2 !== 1 }"
             class="form-input block w-full rounded-none border-none focus:outline-none focus:shadow-none text-lg pl-6 pr-10 py-3 text-gray-800"
             placeholder="nothing"
