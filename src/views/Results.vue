@@ -2,7 +2,7 @@
   <div class="p-4 sm:p-12 md:p-16 flex flex-col items-center min-h-screen bg-gray-50">
     <Logo class="pb-4 pt-4 sm:pt-0" />
     <p v-if="poll" class="max-w-5xl w-full break-words text-xl sm:text-2xl py-4 sm:py-8 text-gray-600 whitespace-pre-line">
-      Got friends? Who are we kidding. Just share <span @click="sharePoll" class="text-teal-500 font-medium underline cursor-pointer hover:text-teal-400 transition ease-in-out duration-150">this link</span> with your parents.
+      Got friends? Who are we kidding. Just <span @click="sharePoll" class="text-teal-500 font-medium underline cursor-pointer hover:text-teal-400 transition ease-in-out duration-150">share this poll</span> with your parents.
     </p>
     <div v-if="poll" class="max-w-5xl my-4 w-full bg-white overflow-hidden shadow-lg rounded-md">
       <label for="question" class="sr-only">Question</label>
