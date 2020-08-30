@@ -14,9 +14,9 @@
 
       <div v-for="(option, index) in poll.results" :key="index" class="flex flex-col w-full rounded-none border-none text-gray-800">
         <div class="px-6 py-4">
-          <div class="font-medium flex items-center">
+          <div class="font-medium flex flex-row items-center">
             <span class="pr-2 text-lg">{{ option.title }}</span>
-            <span class="text-sm font-normal">{{ option.votes }} {{ option.votes > 1 ? 'votes' : 'vote' }}</span>
+            <span class="text-sm font-normal whitespace-no-wrap">{{ option.votes }} {{ option.votes === 1 ? 'vote' : 'votes' }}</span>
           </div>
         </div>
         <!-- <div class="w-full bg-gray-400 relative">

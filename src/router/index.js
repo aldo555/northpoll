@@ -6,7 +6,7 @@ Vue.use(VueRouter)
 const routes = [
   {
     path: '/',
-    name: 'Crate',
+    name: 'Create',
     component: () => import(/* webpackChunkName: "create" */ '@/views/Create')
   },
   {

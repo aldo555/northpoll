@@ -3,7 +3,9 @@
     <Logo class="pb-4 pt-4 sm:pt-0" />
     <p v-if="!lastPollCreated" class="max-w-5xl w-full break-words text-xl sm:text-2xl py-4 sm:py-8 text-gray-600 whitespace-pre-line">{{ guide }}</p>
     <p v-else class="max-w-5xl w-full break-words text-xl sm:text-2xl py-4 sm:py-8 text-gray-600 whitespace-pre-line">
-      Nice work! Now click <span @click="sharePoll" class="text-teal-500 font-medium underline cursor-pointer hover:text-teal-400 transition ease-in-out duration-150">here</span> to share the link to your imaginary friends.
+      Nice work! Now <span @click="sharePoll" class="text-teal-500 font-medium underline cursor-pointer hover:text-teal-400 transition ease-in-out duration-150">click here to share the poll</span> to your imaginary friends.
+      <br />
+      Also, make sure you get at least one <span @click="sharePoll" class="text-teal-500 font-medium underline cursor-pointer hover:text-teal-400 transition ease-in-out duration-150">vote on this poll</span>.
     </p>
     <div class="max-w-5xl w-full bg-white overflow-hidden shadow-lg rounded-md">
       <label for="question" class="sr-only">Question</label>
