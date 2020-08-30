@@ -46,7 +46,7 @@ export default {
           title: 'Goodie',
           text: response.data.message,
         })
-        this.$router.push({ name: 'Results', params: { poll: this.poll.id } })
+        this.$router.push({ name: 'Results', params: { poll: this.poll.slug } })
       })
     }
   },
@@ -59,7 +59,7 @@ export default {
           text: response.data.message,
         })
 
-        this.$router.push({ name: 'Results', params: { poll: response.data.poll.id } })
+        this.$router.push({ name: 'Results', params: { poll: response.data.poll.slug } })
 
         return
       }

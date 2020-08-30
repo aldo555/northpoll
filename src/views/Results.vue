@@ -19,10 +19,6 @@
             <span class="text-sm font-normal whitespace-no-wrap">{{ option.votes }} {{ option.votes === 1 ? 'vote' : 'votes' }}</span>
           </div>
         </div>
-        <!-- <div class="w-full bg-gray-400 relative">
-          <span class="absolute px-6 py-1 text-white text-xl">{{ option.percentage.toFixed(2) }}%</span>
-          <div :style="{ width: `${option.percentage.toFixed(2)}%` }" class="h-10 bg-teal-500"></div>
-        </div> -->
         <div class="w-full bg-gray-400">
           <div :style="{ 'max-width' : `${option.percentage.toFixed(2)}%` }" class="bg-teal-500 pr-2 py-1 text-right text-white text-xl transition ease-in-out duration-150">
             <span class="ml-6">{{ option.percentage.toFixed(2) }}%</span>
@@ -51,7 +47,7 @@ export default {
   methods: {
     sharePoll () {
       const el = document.createElement('textarea')
-      el.value = window.location.origin + this.$router.resolve({name: 'Vote', params: {poll: this.poll.id}}).href
+      el.value = window.location.origin + this.$router.resolve({name: 'Vote', params: {poll: this.poll.slug}}).href
       document.body.appendChild(el)
       el.select()
       document.execCommand('copy')
