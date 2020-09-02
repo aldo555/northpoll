@@ -40,7 +40,11 @@ export default {
   },
   methods: {
     vote (index) {
-      Poll.vote(this.poll.options[index].id).then(response => {
+      const profile = {
+        profile: localStorage.profile ? JSON.parse(localStorage.profile).id : null
+      }
+
+      Poll.vote(this.poll.options[index].id, profile).then(response => {
         this.$notify({
           type: 'success',
           title: 'Goodie',

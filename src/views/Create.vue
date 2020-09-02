@@ -50,11 +50,16 @@
         </div>
       </transition-group>
     </div>
-    <span v-if="!lastPollCreated" class="md:max-w-xs w-full self-center inline-flex py-8 sm:py-12 justify-start">
-      <button @click="createPoll" type="button" class="w-full inline-flex items-center justify-center px-6 py-3 shadow-md border border-transparent text-base leading-6 font-medium rounded-md text-white  bg-teal-500 hover:bg-teal-400 focus:outline-none focus:border-teal-600 focus:shadow-outline-teal active:bg-teal-600 transition ease-in-out duration-150">
+    <div v-if="!lastPollCreated" class="md:max-w-5xl w-full self-center inline-flex py-8 sm:py-12 justify-between">
+      <button @click="createPoll" type="button" class="inline-flex items-center justify-center px-6 py-3 shadow-md border border-transparent text-base leading-6 font-medium rounded-md text-white  bg-teal-500 hover:bg-teal-400 focus:outline-none focus:border-teal-600 focus:shadow-outline-teal active:bg-teal-600 transition ease-in-out duration-150">
         Create poll
       </button>
-    </span>
+      <button v-if="!currentProfile" @click="profileModalState = true" type="button" class="inline-flex items-center px-6 py-3 border border-gray-300 text-base leading-6 font-medium rounded-md text-teal-700 bg-white hover:text-teal-500 focus:outline-none focus:border-teal-300 focus:shadow-outline-teal active:text-teal-800 active:bg-teal-50 transition ease-in-out duration-150">
+        Create profile
+      </button>
+      <p v-else class="text-teal-500">Profile - {{ currentProfile.name }}</p>
+    </div>
+
     <div v-else class="max-w-5xl w-full self-center inline-flex py-8 sm:py-12 justify-start">
       <button @click="viewResults" type="button" class="mr-3 inline-flex items-center justify-center px-6 py-3 shadow-md border border-transparent text-base leading-6 font-medium rounded-md text-white  bg-teal-500 hover:bg-teal-400 focus:outline-none focus:border-teal-600 focus:shadow-outline-teal active:bg-teal-600 transition ease-in-out duration-150">
         View results
@@ -63,23 +68,46 @@
         Create new poll
       </button>
     </div>
+
+    <Modal :state="profileModalState" @close="profileModalState = false" @confirm="createProfile()" type="success">
+      <h1 slot="header">
+        Create a profile
+      </h1>
+
+      <div class="text-left">
+        <label for="email" class="block text-sm font-medium leading-5 text-gray-700">Name</label>
+        <div class="mt-1 relative rounded-md shadow-sm">
+          <input v-model="profileName" id="email" class="form-input block w-full sm:text-sm sm:leading-5" placeholder="John Doe">
+        </div>
+      </div>
+
+      <span slot="button">
+        Create
+      </span>
+    </Modal>
   </div>
 </template>
 
 <script>
 import Logo from '@/components/Logo'
+import Modal from '@/components/Modal'
 import Poll from '@/api/Poll'
+import Profile from '@/api/Profile'
 
 export default {
   name: 'Create',
   components: {
     Logo,
+    Modal,
   },
   data () {
     return {
       title: '',
       options: ['', ''],
       lastPollCreated: null,
+      profileModalState: false,
+      profileName: '',
+      currentProfile: null
     }
   },
   computed: {
@@ -202,10 +230,10 @@ export default {
       document.body.removeChild(el)
 
       this.$notify({
-          type: 'success',
-          title: 'Goodie',
-          text: 'Poll link copied to clipboard.',
-        })
+        type: 'success',
+        title: 'Goodie',
+        text: 'Poll link copied to clipboard.',
+      })
     },
     voteOnPoll () {
       this.$router.push({name: 'Vote', params: {poll: this.lastPollCreated}})
@@ -223,8 +251,25 @@ export default {
 
       this.$router.push({ name: 'Results', params: { poll: this.lastPollCreated } })
     },
+    createProfile () {
+      Profile.store({name: this.profileName}).then(response => {
+        this.$notify({
+          type: 'success',
+          title: 'Goodie',
+          text: response.data.message,
+        })
+
+        this.profileModalState = false
+        localStorage.profile = JSON.stringify(response.data.profile)
+        this.currentProfile = response.data.profile
+      })
+    }
   },
   mounted () {
+    if (localStorage.profile) {
+      this.currentProfile = JSON.parse(localStorage.profile)
+    }
+
     this.showLastPollCreated()
 
     this.$refs['title'].$el.focus()

@@ -9,8 +9,8 @@ export default {
     return Api.post(`/poll`, poll)
   },
 
-  vote (option) {
-    return Api.post(`option/${option}/vote`)
+  vote (option, data) {
+    return Api.post(`option/${option}/vote`, data)
   },
 
   results (poll) {
